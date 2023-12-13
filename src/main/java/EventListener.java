@@ -18,19 +18,26 @@ public class EventListener extends Thread{
 
     public void run() {
         while(readyToQuit()){
-
+            if(shouldReply()){
+                reply();
+            }
         }
     }
 
     public Boolean readyToQuit() {
-        return null;
+        return this.eventTracker.has("quit");
     }
 
     public Boolean shouldReply() {
-        return null;
+        return this.eventTracker.has(this.messageToListenFor);
     }
 
     public void reply() {
-        System.out.println(this.messageToReplyWith);
+        this.eventTracker.handle(this.messageToListenFor, new EventHandler() {
+            @Override
+            public void handle() {
+                System.out.println(messageToReplyWith);
+            }
+        });
     }
 }
