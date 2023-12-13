@@ -12,7 +12,7 @@ public class EventTracker implements Tracker {
     }
 
     synchronized public static EventTracker getInstance() {
-        return null;
+        return INSTANCE;
     }
 
     @Override
@@ -21,13 +21,20 @@ public class EventTracker implements Tracker {
     }
 
     synchronized public void push(String message) {
+            this.tracker.merge(message, 1, Integer::sum);
     }
 
     synchronized public Boolean has(String message) {
-        return null;
+        return this.tracker.containsKey(message);
     }
 
     synchronized public void handle(String message, EventHandler e) {
+        if(this.has(message)){
+            this.tracker.put(message, this.tracker.get(message) - 1);
+        }
+        if(this.tracker.get(message) == 0){
+            this.tracker.remove(message);
+        }
     }
 
     // Do not use this. This constructor is for tests only
