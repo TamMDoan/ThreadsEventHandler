@@ -17,7 +17,7 @@ public class EventListener extends Thread{
     }
 
     public void run() {
-        while(readyToQuit()){
+        while(!readyToQuit()){
             if(shouldReply()){
                 reply();
             }
@@ -39,5 +39,6 @@ public class EventListener extends Thread{
                 System.out.println(messageToReplyWith);
             }
         });
+
     }
 }

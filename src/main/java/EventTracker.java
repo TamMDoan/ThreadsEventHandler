@@ -29,6 +29,7 @@ public class EventTracker implements Tracker {
     }
 
     synchronized public void handle(String message, EventHandler e) {
+        e.handle();
         if(this.has(message)){
             this.tracker.put(message, this.tracker.get(message) - 1);
         }
